@@ -26,10 +26,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.addAllowedOrigin("http://localhost:3000");
+                    config.addAllowedOriginPattern("*");
                     config.addAllowedMethod("*");
                     config.addAllowedHeader("*");
-                    config.setAllowCredentials(true);
+                    config.setAllowCredentials(false);
                     return config;
                 }))
                 .sessionManagement(session ->
@@ -42,9 +42,6 @@ public class SecurityConfig {
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/screens/**").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/shows/**").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/seats/**").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/api-docs/**").permitAll()
-                        .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/api/movies/**", "/api/theatres/**",
                                 "/api/screens/**", "/api/shows/**",
                                 "/api/seats/**").hasRole("ADMIN")
